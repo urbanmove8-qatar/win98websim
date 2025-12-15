@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windows 98 – Asztal</title>
+  <!-- Load Fixedsys 62 font for that authentic look -->
+  <link href="https://fonts.cdnfonts.com/css/fixedsys-62" rel="stylesheet">
+  <link rel="stylesheet" href="windows.css" />
+</head>
+
+  <div id="desktop">
+    <!-- Asztali ikonok itt lesznek -->
+  </div>
+
+  <div class="taskbar">
+    <div class="start-button" id="start-button">
+      <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="Start">
+      Start
+    </div>
+    <div class="taskbar-separator"></div>
+    <div id="taskbar-windows" style="display: flex; gap: 4px; flex-grow: 1; overflow: hidden;">
+      <!-- Ablak gombok itt jelennek meg -->
+    </div>
+    <div class="taskbar-time" id="taskbar-time"></div>
+  </div>
+
+  <div class="start-menu" id="start-menu" style="display: none;">
+    <div class="start-menu-sidebar">Windows 98</div>
+    <ul class="start-menu-items">
+      <li class="start-menu-item" onclick="openNotepad(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/notepad-1.png" alt="Notepad">Jegyzettömb
+      </li>
+      <li class="start-menu-item" onclick="openBrowser(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/msie1-0.png" alt="IE">Internet Explorer
+      </li>
+      <li class="start-menu-item" onclick="openWindowsExplorer(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/directory_explorer-0.png" alt="WE">Windows Explorer
+      </li>
+      <li class="start-menu-item" onclick="openMSNMessenger(); hideStartMenu(); playSound('click');">
+        <img src="https://files.catbox.moe/bnnmoz.webp" alt="MSN">MSN Messenger
+      </li>
+      <li class="start-menu-item" onclick="openHotmail(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/mailbox_world-0.png" alt="Hotmail">MSN Hotmail
+      </li>
+      <li style="border-bottom: 1px solid #808080; margin: 2px 0;"></li>
+      <li class="start-menu-item" onclick="openWord(); hideStartMenu(); playSound('click');">
+        <img src="https://files.catbox.moe/zadrz1.png" alt="Word">Microsoft Word
+      </li>
+      <li class="start-menu-item" onclick="openExcel(); hideStartMenu(); playSound('click');">
+        <img src="https://files.catbox.moe/c9fe1t.svg" alt="Excel">Microsoft Excel
+      </li>
+      <li class="start-menu-item" onclick="openPowerPoint(); hideStartMenu(); playSound('click');">
+        <img src="https://files.catbox.moe/gok94g.svg" alt="PowerPoint">Microsoft PowerPoint
+      </li>
+      <li style="border-bottom: 1px solid #808080; margin: 2px 0;"></li>
+      <li class="start-menu-item" onclick="openPaint(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/paint_old-0.png" alt="Paint">Paint
+      </li>
+      <li class="start-menu-item" onclick="openImagingForWindows(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/kodak_imaging-0.png" alt="Imaging">Imaging for Windows
+      </li>
+      <li class="start-menu-item" onclick="openWindowsMediaPlayer(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/media_player-0.png" alt="WMP">Windows Media Player
+      </li>
+      <li style="border-bottom: 1px solid #808080; margin: 2px 0;"></li>
+      <li class="start-menu-item" onclick="openMinesweeper(); hideStartMenu(); playSound('click');">
+        <img src="https://98.js.org/images/icons/minesweeper-32x32.png" alt="Minesweeper">Aknakereső
+      </li>
+      <li class="start-menu-item" onclick="openPinball(); hideStartMenu(); playSound('click');">
+        <img src="https://98.js.org/images/icons/pinball-32x32.png" alt="Pinball">3D Pinball
+      </li>
+      <li class="start-menu-item" onclick="openWolf3D(); hideStartMenu(); playSound('click');">
+        <img src="https://github.com/loadx/html5-wolfenstein3D/blob/master/favicon.png?raw=true" alt="Wolf3D">Wolfenstein 3D
+      </li>
+      <li style="border-bottom: 1px solid #808080; margin: 2px 0;"></li>
+      <li class="start-menu-item" onclick="openMicrosoftBob(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/bob-0.png" alt="Bob">Microsoft Bob
+      </li>
+      <li class="start-menu-item" onclick="openMicrosoftPlus(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/themes-0.png" alt="Plus">Microsoft Plus!
+      </li>
+      <li style="border-bottom: 1px solid #808080; margin: 2px 0;"></li>
+      <li class="start-menu-item" onclick="openCalculator(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/calculator-0.png" alt="Calc">Számológép
+      </li>
+      <li class="start-menu-item" onclick="openActiveX(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="ActiveX">ActiveX Vezérlőpult
+      </li>
+      <li class="start-menu-item" onclick="openFlashPlayer(); hideStartMenu(); playSound('click');">
+        <img src="https://static.wikia.nocookie.net/logopedia/images/6/6b/Fl-player6.png/revision/latest?cb=20190707095933" alt="Flash">Macromedia Flash Player
+      </li>
+      <li class="start-menu-item" onclick="openFlashEditor(); hideStartMenu(); playSound('click');">
+        <img src="https://static.wikia.nocookie.net/logopedia/images/6/6b/Fl-player6.png/revision/latest?cb=20190707095933" alt="FlashMX">Macromedia Flash MX
+      </li>
+      <li class="start-menu-item" onclick="openEmojiRegistry(); hideStartMenu(); playSound('click');">
+        <img src="https://urbanmove8.neocities.org/emojis/nyitotttenyeruember.png" alt="Emoji Registry">EMOJI Registry
+      </li>
+      <li style="border-bottom: 1px solid #808080; margin: 2px 0;"></li>
+      <li class="start-menu-item" onclick="playSound('ding'); showMessageBox({title:'VBJScript', message:'Hamarosan!', icon:'warning', buttons:['OK']}); hideStartMenu(); playSound('click');">
+        <img src="https://upload.wikimedia.org/wikipedia/en/d/d8/VBSccript_file_format_icon.png" alt="VBJScript">VBJScript Futtató
+      </li>
+      <li class="start-menu-item" onclick="openTaskManager(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/computer_taskmgr-0.png" alt="Task Manager">Feladatkezelő
+      </li>
+      <li class="start-menu-item" onclick="openStressTest(); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/msg_warning-0.png" alt="Stress Test">Stressz Teszt (100 program)
+      </li>
+      <li class="start-menu-item" onclick="triggerBSOD(); hideStartMenu();">
+        <img src="https://files.catbox.moe/xcop3u.webp" alt="BSoD">BSoD (Fejlesztői)
+      </li>
+      <li style="border-bottom: 1px solid #808080; margin: 2px 0;"></li>
+      <li class="start-menu-item" onclick="showMessageBox({title:'Újraindítás', message:'Biztosan újraindítja a Windows 98 szimulátort?\\n\\nMinden nem mentett adat elvész!', icon:'warning', buttons:[{text:'Igen', callback:()=>{playSound('close'); setTimeout(()=>location.reload(), 500);}}, 'Nem']}); hideStartMenu();">
+        <img src="https://win98icons.alexmeub.com/icons/png/shut_down_normal-2.png" alt="Restart">Újraindítás
+      </li>
+      <li class="start-menu-item" onclick="showMessageBox({title:'Leállítás', message:'Biztosan le szeretné állítani a Windows rendszert?', icon:'warning', buttons:['Igen', 'Nem']}); hideStartMenu(); playSound('click');">
+        <img src="https://win98icons.alexmeub.com/icons/png/shut_down_normal-3.png" alt="Shut Down">Leállítás...
+      </li>
+    </ul>
+  </div>
+
+  <!-- Hangok -->
+  <audio id="audio-click" src="https://files.catbox.moe/4jq285.mp3" preload="auto"></audio>
+  <audio id="audio-error" src="https://files.catbox.moe/0odkzx.mp3" preload="auto"></audio>
+  <audio id="audio-ding" src="https://files.catbox.moe/p920rw.mp3" preload="auto"></audio>
+
+  <!-- Context Menu -->
+  <div class="context-menu" id="context-menu"></div>
+
+<script src="windows.js"></script>
+<script src="https://urbanmove8.neocities.org/winemoji98.js"></script>
+</body>
+</html>
