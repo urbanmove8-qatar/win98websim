@@ -1,0 +1,2487 @@
+body, .desktop-icon, .titlebar, .btn, .start-button {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fixedsys 62', monospace;
+      background-color: #008080; /* Teal/Pillanatnyi kék */
+      overflow: hidden;
+      color: white;
+      image-rendering: pixelated;
+    }
+
+    /* CRT scanlines effect */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      z-index: 9999;
+      opacity: 0.1;
+    }
+
+    /* Blue Screen of Death */
+    .bsod {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #0000AA;
+      color: white;
+      font-family: 'Fixedsys 62', 'Courier New', monospace;
+      z-index: 10000;
+      display: none;
+      cursor: none;
+      overflow: auto;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .bsod pre {
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* Taskbar (Feladatkezelő) */
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      z-index: 1000;
+    }
+
+    .start-button {
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 2px 6px;
+      margin-right: 4px;
+        cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      font-weight: bold;
+      color: black;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .start-button:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      padding: 3px 5px 1px 7px; /* Shift text down-right */
+    }
+
+    .start-button img {
+      width: 18px;
+      height: 18px;
+      margin-right: 4px;
+    }
+
+    .taskbar-separator {
+      height: 20px;
+      width: 2px;
+      background-color: #808080;
+      border-left: 1px solid white;
+      margin: 0 4px;
+    }
+
+    .taskbar-time {
+      margin-left: auto;
+      background-color: #C0C0C0;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid white;
+      border-right: 2px solid white;
+      padding: 2px 6px;
+      font-size: 14px;
+      color: black;
+    }
+
+    /* Window Styles */
+    .window {
+      position: absolute;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      box-shadow: 2px 2px 0 0 black;
+      display: flex;
+      flex-direction: column;
+      min-width: 150px;
+      min-height: 100px;
+      z-index: 100;
+      resize: both; /* Allow resizing */
+      overflow: hidden;
+    }
+
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2px;
+      /* Inactive color */
+      background: linear-gradient(90deg, #808080, #A0A0A0); 
+      color: white;
+     cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      border-bottom: 1px solid black;
+    }
+    
+    .window.active .titlebar {
+        /* Active color */
+        background: linear-gradient(90deg, #000080, #1080d0);
+    }
+
+    .titlebar-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+        image-rendering: pixelated;
+    }
+
+    .titlebar-text {
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-grow: 1;
+      font-size: 13px;
+    }
+
+    .titlebar-buttons {
+      display: flex;
+      gap: 2px;
+    }
+
+    .titlebar-buttons .btn {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: bold;
+      color: black;
+    }
+
+    .window-content {
+      padding: 6px;
+      flex-grow: 1;
+      /* Better 98 style content area: */
+      background-color: #DFDFDF; /* Light gray for content */
+      border: 1px inset #808080;
+      margin: 4px;
+      overflow: auto;
+    }
+
+    /* General Button Style */
+    .btn {
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 1px 4px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: black;
+      font-family: 'Fixedsys 62', monospace;
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      padding: 2px 3px 0px 5px; /* Shift text down-right */
+    }
+
+    /* Desktop Icons */
+    .desktop-icon {
+      position: absolute;
+      width: 70px;
+      text-align: center;
+      padding: 5px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: white;
+      text-shadow: 1px 1px #000;
+    }
+
+    .desktop-icon img {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 5px;
+      image-rendering: pixelated;
+    }
+
+    .desktop-icon span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .desktop-icon:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px dotted white;
+    }
+
+    .desktop-icon.selected {
+      background-color: rgba(0, 0, 128, 0.5);
+      border: 1px dotted white;
+    }
+
+    /* Context Menu */
+    .context-menu {
+      position: fixed;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 2px;
+      z-index: 3000;
+      display: none;
+      min-width: 150px;
+    }
+    .context-menu-item {
+      padding: 4px 20px 4px 8px;
+      color: black;
+      font-size: 12px;
+    }
+    .context-menu-item:hover {
+      background-color: #000080;
+      color: white;
+    }
+    .context-menu-separator {
+      height: 1px;
+      background-color: #808080;
+      margin: 2px 0;
+    }
+
+    /* Message Box */
+    .message-box {
+      width: 320px;
+      min-height: 150px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2000;
+      padding: 4px;
+      /* Remove inner content border for message box */
+      resize: none;
+    }
+    .message-box .window-content {
+      border: none;
+      margin: 0;
+      padding: 15px;
+      background-color: #C0C0C0;
+      display: flex;
+      align-items: center;
+      color: black;
+    }
+    .message-icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    .message-text {
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.3;
+    }
+    .message-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 5px 0 10px;
+    }
+    .message-buttons .btn {
+        min-width: 70px;
+    }
+
+    /* Start Menu */
+    .start-menu {
+      position: fixed;
+      bottom: 28px;
+      left: 0;
+      width: 250px; /* Made wider for longer Hungarian names */
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      z-index: 1001;
+      display: none; /* hidden by default */
+      box-shadow: 2px -2px 0 0 black;
+      display: flex;
+    }
+
+    .start-menu-sidebar {
+      width: 25px;
+      background-color: #808080;
+      color: white;
+      font-size: 20px;
+      padding: 5px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    .start-menu-items {
+      flex-grow: 1;
+      padding: 0;
+      list-style: none;
+      background-color: #C0C0C0;
+    }
+    
+    body, .titlebar, .titlebar-text, .btn, .start-button, .titlebar-icon, div.titlebar {
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+    }
+
+    .start-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: black;
+      border: 1px solid transparent;
+      margin: 0 1px;
+    }
+
+    .start-menu-item:hover {
+      background-color: #000080;
+      color: white;
+      border-top-color: #000080;
+      border-bottom-color: #000080;
+    }
+
+    .start-menu-item img {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+      image-rendering: pixelated;
+    }
+    
+    /* Input for browser */
+    .browser-input-bar {
+        background-color: white;
+        border: 1px solid #777;
+        padding: 1px 3px;
+        color: black;
+        font-size: 12px;
+        box-shadow: inset 1px 1px 0 0 #808080;
+        height: 22px;
+        display: flex;
+        align-items: center;
+    }
+
+    .browser-input-bar input {
+        background-color: white;
+        border: none;
+        outline: none;
+        color: black;
+        font-family: 'Fixedsys 62', monospace;
+    }
+
+    .browser-toolbar {
+      display: flex; 
+      gap: 4px; 
+      margin-bottom: 4px; 
+      padding: 2px; 
+      border-top: 1px solid white; 
+      border-left: 1px solid white; 
+      border-right: 1px solid #808080; 
+      border-bottom: 1px solid #808080; 
+      background-color: #C0C0C0;
+    }
+    .browser-toolbar .btn {
+      padding: 2px 6px;
+    }
+
+    /* Content fields inside apps */
+    textarea {
+        background-color: white;
+        border: 1px inset #808080;
+        padding: 4px;
+        color: black;
+        font-family: 'Fixedsys 62', monospace;
+    }
+    
+    /* 1. The Scrollbar Width/Height */
+::-webkit-scrollbar {
+  width: 16px; /* Classic Win98 width */
+  height: 16px;
+}
+
+/* 2. The Track (The background behind the bar) */
+/* Authentic "dithered" checkerboard pattern */
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(45deg, #dfdfdf 25%, transparent 25%, transparent 75%, #dfdfdf 75%, #dfdfdf), 
+    linear-gradient(45deg, #dfdfdf 25%, transparent 25%, transparent 75%, #dfdfdf 75%, #dfdfdf);
+  background-size: 4px 4px;
+  background-position: 0 0, 2px 2px;
+}
+
+/* 3. The Thumb (The part you drag) */
+::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0; /* Win98 Silver */
+  /* The 3D Bevel Effect */
+  box-shadow: 
+    inset 1px 1px 0 #ffffff,  /* Top/Left Highlight */
+    inset -1px -1px 0 #000000,/* Bottom/Right Black */
+    inset -2px -2px 0 #808080;/* Bottom/Right Shadow */
+}
+
+/* 4. The Buttons (Arrows) General Style */
+::-webkit-scrollbar-button {
+  display: block;
+  height: 16px;
+  width: 16px;
+  background-color: #c0c0c0;
+  /* The 3D Button Bevel */
+  box-shadow: 
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #000000,
+    inset -2px -2px 0 #808080;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 5. Preventing "4 Buttons" (hiding the inner doubles) */
+/* We only want buttons at the very start and very end */
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement, 
+::-webkit-scrollbar-button:horizontal:start:increment, 
+::-webkit-scrollbar-button:horizontal:end:decrement {
+  display: none;
+}
+
+/* 6. The Arrow Icons (SVG Data URIs for crisp pixel-perfect arrows) */
+
+/* UP Arrow */
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 0L0 7h8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* DOWN Arrow */
+::-webkit-scrollbar-button:vertical:end:increment {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8L0 1h8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* LEFT Arrow */
+::-webkit-scrollbar-button:horizontal:start:decrement {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4l7 4V0z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* RIGHT Arrow */
+::-webkit-scrollbar-button:horizontal:end:increment {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 4L1 0v8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+    /* Windows 98 Style Range Sliders (Seek Bar & Volume) */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      height: 20px;
+      outline: none;
+    }
+    
+    /* Track (the groove) */
+    input[type="range"]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      background: #C0C0C0;
+      border: 1px solid #808080;
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    input[type="range"]::-moz-range-track {
+      width: 100%;
+      height: 6px;
+      background: #C0C0C0;
+      border: 1px solid #808080;
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    /* Thumb (the draggable part) */
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 18px;
+      background: linear-gradient(to right, 
+        #DFDFDF 0%, 
+        #C0C0C0 50%, 
+        #808080 100%);
+      border: 1px solid #808080;
+      box-shadow: 
+        inset 1px 1px 0 #FFFFFF,
+        inset -1px -1px 0 #000000,
+        1px 1px 2px rgba(0,0,0,0.3);
+      cursor: url("https://files.catbox.moe/rllfo2.cur"), pointer;
+      margin-top: -7px;
+    }
+    
+    input[type="range"]::-moz-range-thumb {
+      width: 12px;
+      height: 18px;
+      background: linear-gradient(to right, 
+        #DFDFDF 0%, 
+        #C0C0C0 50%, 
+        #808080 100%);
+      border: 1px solid #808080;
+      box-shadow: 
+        inset 1px 1px 0 #FFFFFF,
+        inset -1px -1px 0 #000000,
+        1px 1px 2px rgba(0,0,0,0.3);
+        cursor: url("https://files.catbox.moe/rllfo2.cur"), pointer;
+      border-radius: 0;
+    }
+    
+    /* Active state */
+    input[type="range"]::-webkit-slider-thumb:active {
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    input[type="range"]::-moz-range-thumb:active {
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+
+    /* MSN Messenger Chattable */
+    #chattable {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    div, input, select, button, iframe {
+        cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+    }
+  </style>
+  <script src="https://beta.iframe.chat/scripts/main.min.js"></script>
+</head>
+<body>
+
+  <!-- Blue Screen of Death -->
+  <div class="bsod" id="bsod" style=" font-family: 'Fixedsys 62', 'Courier New', monospace;">
+    <pre><span style="background-color: #AAAAAA; color: #0000AA; padding: 0 4px;">Windows</span>
+
+Egy végzetes 0E kivétel történt a 0028:C0034B23 címen. Az aktuális
+alkalmazás leáll.
+
+*  Nyomjon meg egy billentyűt az aktuális alkalmazás leállításához.
+*  Nyomja meg ismét a CTRL+ALT+DEL billentyűket a számítógép újraindításához.
+   Ezzel elveszíti az összes alkalmazásban lévő, nem mentett adatot.
+
+Nyomjon meg egy billentyűt a folytatáshoz<span id="bsod-cursor" style="visibility: visible; animation: blink 1s step-start infinite;">_</span></pre>
+  </div>
+
+  <style>
+body, .desktop-icon, .titlebar, .btn, .start-button {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fixedsys 62', monospace;
+      background-color: #008080; /* Teal/Pillanatnyi kék */
+      overflow: hidden;
+      color: white;
+      image-rendering: pixelated;
+    }
+
+    /* CRT scanlines effect */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      z-index: 9999;
+      opacity: 0.1;
+    }
+
+    /* Blue Screen of Death */
+    .bsod {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #0000AA;
+      color: white;
+      font-family: 'Fixedsys 62', 'Courier New', monospace;
+      z-index: 10000;
+      display: none;
+      cursor: none;
+      overflow: auto;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .bsod pre {
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* Taskbar (Feladatkezelő) */
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      z-index: 1000;
+    }
+
+    .start-button {
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 2px 6px;
+      margin-right: 4px;
+        cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      font-weight: bold;
+      color: black;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .start-button:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      padding: 3px 5px 1px 7px; /* Shift text down-right */
+    }
+
+    .start-button img {
+      width: 18px;
+      height: 18px;
+      margin-right: 4px;
+    }
+
+    .taskbar-separator {
+      height: 20px;
+      width: 2px;
+      background-color: #808080;
+      border-left: 1px solid white;
+      margin: 0 4px;
+    }
+
+    .taskbar-time {
+      margin-left: auto;
+      background-color: #C0C0C0;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid white;
+      border-right: 2px solid white;
+      padding: 2px 6px;
+      font-size: 14px;
+      color: black;
+    }
+
+    /* Window Styles */
+    .window {
+      position: absolute;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      box-shadow: 2px 2px 0 0 black;
+      display: flex;
+      flex-direction: column;
+      min-width: 150px;
+      min-height: 100px;
+      z-index: 100;
+      resize: both; /* Allow resizing */
+      overflow: hidden;
+    }
+
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2px;
+      /* Inactive color */
+      background: linear-gradient(90deg, #808080, #A0A0A0); 
+      color: white;
+     cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      border-bottom: 1px solid black;
+    }
+    
+    .window.active .titlebar {
+        /* Active color */
+        background: linear-gradient(90deg, #000080, #1080d0);
+    }
+
+    .titlebar-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+        image-rendering: pixelated;
+    }
+
+    .titlebar-text {
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-grow: 1;
+      font-size: 13px;
+    }
+
+    .titlebar-buttons {
+      display: flex;
+      gap: 2px;
+    }
+
+    .titlebar-buttons .btn {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: bold;
+      color: black;
+    }
+
+    .window-content {
+      padding: 6px;
+      flex-grow: 1;
+      /* Better 98 style content area: */
+      background-color: #DFDFDF; /* Light gray for content */
+      border: 1px inset #808080;
+      margin: 4px;
+      overflow: auto;
+    }
+
+    /* General Button Style */
+    .btn {
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 1px 4px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: black;
+      font-family: 'Fixedsys 62', monospace;
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      padding: 2px 3px 0px 5px; /* Shift text down-right */
+    }
+
+    /* Desktop Icons */
+    .desktop-icon {
+      position: absolute;
+      width: 70px;
+      text-align: center;
+      padding: 5px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: white;
+      text-shadow: 1px 1px #000;
+    }
+
+    .desktop-icon img {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 5px;
+      image-rendering: pixelated;
+    }
+
+    .desktop-icon span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .desktop-icon:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px dotted white;
+    }
+
+    .desktop-icon.selected {
+      background-color: rgba(0, 0, 128, 0.5);
+      border: 1px dotted white;
+    }
+
+    /* Context Menu */
+    .context-menu {
+      position: fixed;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 2px;
+      z-index: 3000;
+      display: none;
+      min-width: 150px;
+    }
+    .context-menu-item {
+      padding: 4px 20px 4px 8px;
+      color: black;
+      font-size: 12px;
+    }
+    .context-menu-item:hover {
+      background-color: #000080;
+      color: white;
+    }
+    .context-menu-separator {
+      height: 1px;
+      background-color: #808080;
+      margin: 2px 0;
+    }
+
+    /* Message Box */
+    .message-box {
+      width: 320px;
+      min-height: 150px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2000;
+      padding: 4px;
+      /* Remove inner content border for message box */
+      resize: none;
+    }
+    .message-box .window-content {
+      border: none;
+      margin: 0;
+      padding: 15px;
+      background-color: #C0C0C0;
+      display: flex;
+      align-items: center;
+      color: black;
+    }
+    .message-icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    .message-text {
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.3;
+    }
+    .message-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 5px 0 10px;
+    }
+    .message-buttons .btn {
+        min-width: 70px;
+    }
+
+    /* Start Menu */
+    .start-menu {
+      position: fixed;
+      bottom: 28px;
+      left: 0;
+      width: 250px; /* Made wider for longer Hungarian names */
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      z-index: 1001;
+      display: none; /* hidden by default */
+      box-shadow: 2px -2px 0 0 black;
+      display: flex;
+    }
+
+    .start-menu-sidebar {
+      width: 25px;
+      background-color: #808080;
+      color: white;
+      font-size: 20px;
+      padding: 5px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    .start-menu-items {
+      flex-grow: 1;
+      padding: 0;
+      list-style: none;
+      background-color: #C0C0C0;
+    }
+    
+    body, .titlebar, .titlebar-text, .btn, .start-button, .titlebar-icon, div.titlebar {
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+    }
+
+    .start-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: black;
+      border: 1px solid transparent;
+      margin: 0 1px;
+    }
+
+    .start-menu-item:hover {
+      background-color: #000080;
+      color: white;
+      border-top-color: #000080;
+      border-bottom-color: #000080;
+    }
+
+    .start-menu-item img {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+      image-rendering: pixelated;
+    }
+    
+    /* Input for browser */
+    .browser-input-bar {
+        background-color: white;
+        border: 1px solid #777;
+        padding: 1px 3px;
+        color: black;
+        font-size: 12px;
+        box-shadow: inset 1px 1px 0 0 #808080;
+        height: 22px;
+        display: flex;
+        align-items: center;
+    }
+
+    .browser-input-bar input {
+        background-color: white;
+        border: none;
+        outline: none;
+        color: black;
+        font-family: 'Fixedsys 62', monospace;
+    }
+
+    .browser-toolbar {
+      display: flex; 
+      gap: 4px; 
+      margin-bottom: 4px; 
+      padding: 2px; 
+      border-top: 1px solid white; 
+      border-left: 1px solid white; 
+      border-right: 1px solid #808080; 
+      border-bottom: 1px solid #808080; 
+      background-color: #C0C0C0;
+    }
+    .browser-toolbar .btn {
+      padding: 2px 6px;
+    }
+
+    /* Content fields inside apps */
+    textarea {
+        background-color: white;
+        border: 1px inset #808080;
+        padding: 4px;
+        color: black;
+        font-family: 'Fixedsys 62', monospace;
+    }
+    
+    /* 1. The Scrollbar Width/Height */
+::-webkit-scrollbar {
+  width: 16px; /* Classic Win98 width */
+  height: 16px;
+}
+
+/* 2. The Track (The background behind the bar) */
+/* Authentic "dithered" checkerboard pattern */
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(45deg, #dfdfdf 25%, transparent 25%, transparent 75%, #dfdfdf 75%, #dfdfdf), 
+    linear-gradient(45deg, #dfdfdf 25%, transparent 25%, transparent 75%, #dfdfdf 75%, #dfdfdf);
+  background-size: 4px 4px;
+  background-position: 0 0, 2px 2px;
+}
+
+/* 3. The Thumb (The part you drag) */
+::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0; /* Win98 Silver */
+  /* The 3D Bevel Effect */
+  box-shadow: 
+    inset 1px 1px 0 #ffffff,  /* Top/Left Highlight */
+    inset -1px -1px 0 #000000,/* Bottom/Right Black */
+    inset -2px -2px 0 #808080;/* Bottom/Right Shadow */
+}
+
+/* 4. The Buttons (Arrows) General Style */
+::-webkit-scrollbar-button {
+  display: block;
+  height: 16px;
+  width: 16px;
+  background-color: #c0c0c0;
+  /* The 3D Button Bevel */
+  box-shadow: 
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #000000,
+    inset -2px -2px 0 #808080;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 5. Preventing "4 Buttons" (hiding the inner doubles) */
+/* We only want buttons at the very start and very end */
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement, 
+::-webkit-scrollbar-button:horizontal:start:increment, 
+::-webkit-scrollbar-button:horizontal:end:decrement {
+  display: none;
+}
+
+/* 6. The Arrow Icons (SVG Data URIs for crisp pixel-perfect arrows) */
+
+/* UP Arrow */
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 0L0 7h8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* DOWN Arrow */
+::-webkit-scrollbar-button:vertical:end:increment {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8L0 1h8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* LEFT Arrow */
+::-webkit-scrollbar-button:horizontal:start:decrement {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4l7 4V0z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* RIGHT Arrow */
+::-webkit-scrollbar-button:horizontal:end:increment {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 4L1 0v8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+    /* Windows 98 Style Range Sliders (Seek Bar & Volume) */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      height: 20px;
+      outline: none;
+    }
+    
+    /* Track (the groove) */
+    input[type="range"]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      background: #C0C0C0;
+      border: 1px solid #808080;
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    input[type="range"]::-moz-range-track {
+      width: 100%;
+      height: 6px;
+      background: #C0C0C0;
+      border: 1px solid #808080;
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    /* Thumb (the draggable part) */
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 18px;
+      background: linear-gradient(to right, 
+        #DFDFDF 0%, 
+        #C0C0C0 50%, 
+        #808080 100%);
+      border: 1px solid #808080;
+      box-shadow: 
+        inset 1px 1px 0 #FFFFFF,
+        inset -1px -1px 0 #000000,
+        1px 1px 2px rgba(0,0,0,0.3);
+      cursor: url("https://files.catbox.moe/rllfo2.cur"), pointer;
+      margin-top: -7px;
+    }
+    
+    input[type="range"]::-moz-range-thumb {
+      width: 12px;
+      height: 18px;
+      background: linear-gradient(to right, 
+        #DFDFDF 0%, 
+        #C0C0C0 50%, 
+        #808080 100%);
+      border: 1px solid #808080;
+      box-shadow: 
+        inset 1px 1px 0 #FFFFFF,
+        inset -1px -1px 0 #000000,
+        1px 1px 2px rgba(0,0,0,0.3);
+        cursor: url("https://files.catbox.moe/rllfo2.cur"), pointer;
+      border-radius: 0;
+    }
+    
+    /* Active state */
+    input[type="range"]::-webkit-slider-thumb:active {
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    input[type="range"]::-moz-range-thumb:active {
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+
+    /* MSN Messenger Chattable */
+    #chattable {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    div, input, select, button, iframe {
+        cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+    }
+  </style>
+  <script src="https://beta.iframe.chat/scripts/main.min.js"></script>
+</head>
+<body>
+
+  <!-- Blue Screen of Death -->
+  <div class="bsod" id="bsod" style=" font-family: 'Fixedsys 62', 'Courier New', monospace;">
+    <pre><span style="background-color: #AAAAAA; color: #0000AA; padding: 0 4px;">Windows</span>
+
+Egy végzetes 0E kivétel történt a 0028:C0034B23 címen. Az aktuális
+alkalmazás leáll.
+
+*  Nyomjon meg egy billentyűt az aktuális alkalmazás leállításához.
+*  Nyomja meg ismét a CTRL+ALT+DEL billentyűket a számítógép újraindításához.
+   Ezzel elveszíti az összes alkalmazásban lévő, nem mentett adatot.
+
+Nyomjon meg egy billentyűt a folytatáshoz<span id="bsod-cursor" style="visibility: visible; animation: blink 1s step-start infinite;">_</span></pre>
+  </div>
+
+  <style>
+  @keyframes blink {
+    50% { opacity: 0; }
+  }body, .desktop-icon, .titlebar, .btn, .start-button {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fixedsys 62', monospace;
+      background-color: #008080; /* Teal/Pillanatnyi kék */
+      overflow: hidden;
+      color: white;
+      image-rendering: pixelated;
+    }
+
+    /* CRT scanlines effect */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      z-index: 9999;
+      opacity: 0.1;
+    }
+
+    /* Blue Screen of Death */
+    .bsod {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #0000AA;
+      color: white;
+      font-family: 'Fixedsys 62', 'Courier New', monospace;
+      z-index: 10000;
+      display: none;
+      cursor: none;
+      overflow: auto;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .bsod pre {
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* Taskbar (Feladatkezelő) */
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      z-index: 1000;
+    }
+
+    .start-button {
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 2px 6px;
+      margin-right: 4px;
+        cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      font-weight: bold;
+      color: black;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .start-button:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      padding: 3px 5px 1px 7px; /* Shift text down-right */
+    }
+
+    .start-button img {
+      width: 18px;
+      height: 18px;
+      margin-right: 4px;
+    }
+
+    .taskbar-separator {
+      height: 20px;
+      width: 2px;
+      background-color: #808080;
+      border-left: 1px solid white;
+      margin: 0 4px;
+    }
+
+    .taskbar-time {
+      margin-left: auto;
+      background-color: #C0C0C0;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid white;
+      border-right: 2px solid white;
+      padding: 2px 6px;
+      font-size: 14px;
+      color: black;
+    }
+
+    /* Window Styles */
+    .window {
+      position: absolute;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      box-shadow: 2px 2px 0 0 black;
+      display: flex;
+      flex-direction: column;
+      min-width: 150px;
+      min-height: 100px;
+      z-index: 100;
+      resize: both; /* Allow resizing */
+      overflow: hidden;
+    }
+
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2px;
+      /* Inactive color */
+      background: linear-gradient(90deg, #808080, #A0A0A0); 
+      color: white;
+     cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      border-bottom: 1px solid black;
+    }
+    
+    .window.active .titlebar {
+        /* Active color */
+        background: linear-gradient(90deg, #000080, #1080d0);
+    }
+
+    .titlebar-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+        image-rendering: pixelated;
+    }
+
+    .titlebar-text {
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-grow: 1;
+      font-size: 13px;
+    }
+
+    .titlebar-buttons {
+      display: flex;
+      gap: 2px;
+    }
+
+    .titlebar-buttons .btn {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: bold;
+      color: black;
+    }
+
+    .window-content {
+      padding: 6px;
+      flex-grow: 1;
+      /* Better 98 style content area: */
+      background-color: #DFDFDF; /* Light gray for content */
+      border: 1px inset #808080;
+      margin: 4px;
+      overflow: auto;
+    }
+
+    /* General Button Style */
+    .btn {
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 1px 4px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: black;
+      font-family: 'Fixedsys 62', monospace;
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      padding: 2px 3px 0px 5px; /* Shift text down-right */
+    }
+
+    /* Desktop Icons */
+    .desktop-icon {
+      position: absolute;
+      width: 70px;
+      text-align: center;
+      padding: 5px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: white;
+      text-shadow: 1px 1px #000;
+    }
+
+    .desktop-icon img {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 5px;
+      image-rendering: pixelated;
+    }
+
+    .desktop-icon span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .desktop-icon:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px dotted white;
+    }
+
+    .desktop-icon.selected {
+      background-color: rgba(0, 0, 128, 0.5);
+      border: 1px dotted white;
+    }
+
+    /* Context Menu */
+    .context-menu {
+      position: fixed;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 2px;
+      z-index: 3000;
+      display: none;
+      min-width: 150px;
+    }
+    .context-menu-item {
+      padding: 4px 20px 4px 8px;
+      color: black;
+      font-size: 12px;
+    }
+    .context-menu-item:hover {
+      background-color: #000080;
+      color: white;
+    }
+    .context-menu-separator {
+      height: 1px;
+      background-color: #808080;
+      margin: 2px 0;
+    }
+
+    /* Message Box */
+    .message-box {
+      width: 320px;
+      min-height: 150px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2000;
+      padding: 4px;
+      /* Remove inner content border for message box */
+      resize: none;
+    }
+    .message-box .window-content {
+      border: none;
+      margin: 0;
+      padding: 15px;
+      background-color: #C0C0C0;
+      display: flex;
+      align-items: center;
+      color: black;
+    }
+    .message-icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    .message-text {
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.3;
+    }
+    .message-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 5px 0 10px;
+    }
+    .message-buttons .btn {
+        min-width: 70px;
+    }
+
+    /* Start Menu */
+    .start-menu {
+      position: fixed;
+      bottom: 28px;
+      left: 0;
+      width: 250px; /* Made wider for longer Hungarian names */
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      z-index: 1001;
+      display: none; /* hidden by default */
+      box-shadow: 2px -2px 0 0 black;
+      display: flex;
+    }
+
+    .start-menu-sidebar {
+      width: 25px;
+      background-color: #808080;
+      color: white;
+      font-size: 20px;
+      padding: 5px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    .start-menu-items {
+      flex-grow: 1;
+      padding: 0;
+      list-style: none;
+      background-color: #C0C0C0;
+    }
+    
+    body, .titlebar, .titlebar-text, .btn, .start-button, .titlebar-icon, div.titlebar {
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+    }
+
+    .start-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: black;
+      border: 1px solid transparent;
+      margin: 0 1px;
+    }
+
+    .start-menu-item:hover {
+      background-color: #000080;
+      color: white;
+      border-top-color: #000080;
+      border-bottom-color: #000080;
+    }
+
+    .start-menu-item img {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+      image-rendering: pixelated;
+    }
+    
+    /* Input for browser */
+    .browser-input-bar {
+        background-color: white;
+        border: 1px solid #777;
+        padding: 1px 3px;
+        color: black;
+        font-size: 12px;
+        box-shadow: inset 1px 1px 0 0 #808080;
+        height: 22px;
+        display: flex;
+        align-items: center;
+    }
+
+    .browser-input-bar input {
+        background-color: white;
+        border: none;
+        outline: none;
+        color: black;
+        font-family: 'Fixedsys 62', monospace;
+    }
+
+    .browser-toolbar {
+      display: flex; 
+      gap: 4px; 
+      margin-bottom: 4px; 
+      padding: 2px; 
+      border-top: 1px solid white; 
+      border-left: 1px solid white; 
+      border-right: 1px solid #808080; 
+      border-bottom: 1px solid #808080; 
+      background-color: #C0C0C0;
+    }
+    .browser-toolbar .btn {
+      padding: 2px 6px;
+    }
+
+    /* Content fields inside apps */
+    textarea {
+        background-color: white;
+        border: 1px inset #808080;
+        padding: 4px;
+        color: black;
+        font-family: 'Fixedsys 62', monospace;
+    }
+    
+    /* 1. The Scrollbar Width/Height */
+::-webkit-scrollbar {
+  width: 16px; /* Classic Win98 width */
+  height: 16px;
+}
+
+/* 2. The Track (The background behind the bar) */
+/* Authentic "dithered" checkerboard pattern */
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(45deg, #dfdfdf 25%, transparent 25%, transparent 75%, #dfdfdf 75%, #dfdfdf), 
+    linear-gradient(45deg, #dfdfdf 25%, transparent 25%, transparent 75%, #dfdfdf 75%, #dfdfdf);
+  background-size: 4px 4px;
+  background-position: 0 0, 2px 2px;
+}
+
+/* 3. The Thumb (The part you drag) */
+::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0; /* Win98 Silver */
+  /* The 3D Bevel Effect */
+  box-shadow: 
+    inset 1px 1px 0 #ffffff,  /* Top/Left Highlight */
+    inset -1px -1px 0 #000000,/* Bottom/Right Black */
+    inset -2px -2px 0 #808080;/* Bottom/Right Shadow */
+}
+
+/* 4. The Buttons (Arrows) General Style */
+::-webkit-scrollbar-button {
+  display: block;
+  height: 16px;
+  width: 16px;
+  background-color: #c0c0c0;
+  /* The 3D Button Bevel */
+  box-shadow: 
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #000000,
+    inset -2px -2px 0 #808080;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 5. Preventing "4 Buttons" (hiding the inner doubles) */
+/* We only want buttons at the very start and very end */
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement, 
+::-webkit-scrollbar-button:horizontal:start:increment, 
+::-webkit-scrollbar-button:horizontal:end:decrement {
+  display: none;
+}
+
+/* 6. The Arrow Icons (SVG Data URIs for crisp pixel-perfect arrows) */
+
+/* UP Arrow */
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 0L0 7h8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* DOWN Arrow */
+::-webkit-scrollbar-button:vertical:end:increment {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8L0 1h8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* LEFT Arrow */
+::-webkit-scrollbar-button:horizontal:start:decrement {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4l7 4V0z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* RIGHT Arrow */
+::-webkit-scrollbar-button:horizontal:end:increment {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 4L1 0v8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+    /* Windows 98 Style Range Sliders (Seek Bar & Volume) */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      height: 20px;
+      outline: none;
+    }
+    
+    /* Track (the groove) */
+    input[type="range"]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      background: #C0C0C0;
+      border: 1px solid #808080;
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    input[type="range"]::-moz-range-track {
+      width: 100%;
+      height: 6px;
+      background: #C0C0C0;
+      border: 1px solid #808080;
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    /* Thumb (the draggable part) */
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 18px;
+      background: linear-gradient(to right, 
+        #DFDFDF 0%, 
+        #C0C0C0 50%, 
+        #808080 100%);
+      border: 1px solid #808080;
+      box-shadow: 
+        inset 1px 1px 0 #FFFFFF,
+        inset -1px -1px 0 #000000,
+        1px 1px 2px rgba(0,0,0,0.3);
+      cursor: url("https://files.catbox.moe/rllfo2.cur"), pointer;
+      margin-top: -7px;
+    }
+    
+    input[type="range"]::-moz-range-thumb {
+      width: 12px;
+      height: 18px;
+      background: linear-gradient(to right, 
+        #DFDFDF 0%, 
+        #C0C0C0 50%, 
+        #808080 100%);
+      border: 1px solid #808080;
+      box-shadow: 
+        inset 1px 1px 0 #FFFFFF,
+        inset -1px -1px 0 #000000,
+        1px 1px 2px rgba(0,0,0,0.3);
+        cursor: url("https://files.catbox.moe/rllfo2.cur"), pointer;
+      border-radius: 0;
+    }
+    
+    /* Active state */
+    input[type="range"]::-webkit-slider-thumb:active {
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    input[type="range"]::-moz-range-thumb:active {
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+
+    /* MSN Messenger Chattable */
+    #chattable {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    div, input, select, button, iframe {
+        cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+    }
+  </style>
+  <script src="https://beta.iframe.chat/scripts/main.min.js"></script>
+</head>
+<body>
+
+  <!-- Blue Screen of Death -->
+  <div class="bsod" id="bsod" style=" font-family: 'Fixedsys 62', 'Courier New', monospace;">
+    <pre><span style="background-color: #AAAAAA; color: #0000AA; padding: 0 4px;">Windows</span>
+
+Egy végzetes 0E kivétel történt a 0028:C0034B23 címen. Az aktuális
+alkalmazás leáll.
+
+*  Nyomjon meg egy billentyűt az aktuális alkalmazás leállításához.
+*  Nyomja meg ismét a CTRL+ALT+DEL billentyűket a számítógép újraindításához.
+   Ezzel elveszíti az összes alkalmazásban lévő, nem mentett adatot.
+
+Nyomjon meg egy billentyűt a folytatáshoz<span id="bsod-cursor" style="visibility: visible; animation: blink 1s step-start infinite;">_</span></pre>
+  </div>
+
+  <style>
+  @keyframes blink {
+    50% { opacity: 0; }
+  }body, .desktop-icon, .titlebar, .btn, .start-button {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Fixedsys 62', monospace;
+      background-color: #008080; /* Teal/Pillanatnyi kék */
+      overflow: hidden;
+      color: white;
+      image-rendering: pixelated;
+    }
+
+    /* CRT scanlines effect */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      z-index: 9999;
+      opacity: 0.1;
+    }
+
+    /* Blue Screen of Death */
+    .bsod {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #0000AA;
+      color: white;
+      font-family: 'Fixedsys 62', 'Courier New', monospace;
+      z-index: 10000;
+      display: none;
+      cursor: none;
+      overflow: auto;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .bsod pre {
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* Taskbar (Feladatkezelő) */
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      z-index: 1000;
+    }
+
+    .start-button {
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 2px 6px;
+      margin-right: 4px;
+        cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      font-weight: bold;
+      color: black;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .start-button:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      padding: 3px 5px 1px 7px; /* Shift text down-right */
+    }
+
+    .start-button img {
+      width: 18px;
+      height: 18px;
+      margin-right: 4px;
+    }
+
+    .taskbar-separator {
+      height: 20px;
+      width: 2px;
+      background-color: #808080;
+      border-left: 1px solid white;
+      margin: 0 4px;
+    }
+
+    .taskbar-time {
+      margin-left: auto;
+      background-color: #C0C0C0;
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid white;
+      border-right: 2px solid white;
+      padding: 2px 6px;
+      font-size: 14px;
+      color: black;
+    }
+
+    /* Window Styles */
+    .window {
+      position: absolute;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      box-shadow: 2px 2px 0 0 black;
+      display: flex;
+      flex-direction: column;
+      min-width: 150px;
+      min-height: 100px;
+      z-index: 100;
+      resize: both; /* Allow resizing */
+      overflow: hidden;
+    }
+
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2px;
+      /* Inactive color */
+      background: linear-gradient(90deg, #808080, #A0A0A0); 
+      color: white;
+     cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      border-bottom: 1px solid black;
+    }
+    
+    .window.active .titlebar {
+        /* Active color */
+        background: linear-gradient(90deg, #000080, #1080d0);
+    }
+
+    .titlebar-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+        image-rendering: pixelated;
+    }
+
+    .titlebar-text {
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-grow: 1;
+      font-size: 13px;
+    }
+
+    .titlebar-buttons {
+      display: flex;
+      gap: 2px;
+    }
+
+    .titlebar-buttons .btn {
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: bold;
+      color: black;
+    }
+
+    .window-content {
+      padding: 6px;
+      flex-grow: 1;
+      /* Better 98 style content area: */
+      background-color: #DFDFDF; /* Light gray for content */
+      border: 1px inset #808080;
+      margin: 4px;
+      overflow: auto;
+    }
+
+    /* General Button Style */
+    .btn {
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 1px 4px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: black;
+      font-family: 'Fixedsys 62', monospace;
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      padding: 2px 3px 0px 5px; /* Shift text down-right */
+    }
+
+    /* Desktop Icons */
+    .desktop-icon {
+      position: absolute;
+      width: 70px;
+      text-align: center;
+      padding: 5px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: white;
+      text-shadow: 1px 1px #000;
+    }
+
+    .desktop-icon img {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 5px;
+      image-rendering: pixelated;
+    }
+
+    .desktop-icon span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .desktop-icon:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px dotted white;
+    }
+
+    .desktop-icon.selected {
+      background-color: rgba(0, 0, 128, 0.5);
+      border: 1px dotted white;
+    }
+
+    /* Context Menu */
+    .context-menu {
+      position: fixed;
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 2px;
+      z-index: 3000;
+      display: none;
+      min-width: 150px;
+    }
+    .context-menu-item {
+      padding: 4px 20px 4px 8px;
+      color: black;
+      font-size: 12px;
+    }
+    .context-menu-item:hover {
+      background-color: #000080;
+      color: white;
+    }
+    .context-menu-separator {
+      height: 1px;
+      background-color: #808080;
+      margin: 2px 0;
+    }
+
+    /* Message Box */
+    .message-box {
+      width: 320px;
+      min-height: 150px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2000;
+      padding: 4px;
+      /* Remove inner content border for message box */
+      resize: none;
+    }
+    .message-box .window-content {
+      border: none;
+      margin: 0;
+      padding: 15px;
+      background-color: #C0C0C0;
+      display: flex;
+      align-items: center;
+      color: black;
+    }
+    .message-icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    .message-text {
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.3;
+    }
+    .message-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 5px 0 10px;
+    }
+    .message-buttons .btn {
+        min-width: 70px;
+    }
+
+    /* Start Menu */
+    .start-menu {
+      position: fixed;
+      bottom: 28px;
+      left: 0;
+      width: 250px; /* Made wider for longer Hungarian names */
+      background-color: #C0C0C0;
+      border-top: 2px solid white;
+      border-left: 2px solid white;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      z-index: 1001;
+      display: none; /* hidden by default */
+      box-shadow: 2px -2px 0 0 black;
+      display: flex;
+    }
+
+    .start-menu-sidebar {
+      width: 25px;
+      background-color: #808080;
+      color: white;
+      font-size: 20px;
+      padding: 5px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    .start-menu-items {
+      flex-grow: 1;
+      padding: 0;
+      list-style: none;
+      background-color: #C0C0C0;
+    }
+    
+    body, .titlebar, .titlebar-text, .btn, .start-button, .titlebar-icon, div.titlebar {
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+    }
+
+    .start-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+      color: black;
+      border: 1px solid transparent;
+      margin: 0 1px;
+    }
+
+    .start-menu-item:hover {
+      background-color: #000080;
+      color: white;
+      border-top-color: #000080;
+      border-bottom-color: #000080;
+    }
+
+    .start-menu-item img {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+      image-rendering: pixelated;
+    }
+    
+    /* Input for browser */
+    .browser-input-bar {
+        background-color: white;
+        border: 1px solid #777;
+        padding: 1px 3px;
+        color: black;
+        font-size: 12px;
+        box-shadow: inset 1px 1px 0 0 #808080;
+        height: 22px;
+        display: flex;
+        align-items: center;
+    }
+
+    .browser-input-bar input {
+        background-color: white;
+        border: none;
+        outline: none;
+        color: black;
+        font-family: 'Fixedsys 62', monospace;
+    }
+
+    .browser-toolbar {
+      display: flex; 
+      gap: 4px; 
+      margin-bottom: 4px; 
+      padding: 2px; 
+      border-top: 1px solid white; 
+      border-left: 1px solid white; 
+      border-right: 1px solid #808080; 
+      border-bottom: 1px solid #808080; 
+      background-color: #C0C0C0;
+    }
+    .browser-toolbar .btn {
+      padding: 2px 6px;
+    }
+
+    /* Content fields inside apps */
+    textarea {
+        background-color: white;
+        border: 1px inset #808080;
+        padding: 4px;
+        color: black;
+        font-family: 'Fixedsys 62', monospace;
+    }
+    
+    /* 1. The Scrollbar Width/Height */
+::-webkit-scrollbar {
+  width: 16px; /* Classic Win98 width */
+  height: 16px;
+}
+
+/* 2. The Track (The background behind the bar) */
+/* Authentic "dithered" checkerboard pattern */
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(45deg, #dfdfdf 25%, transparent 25%, transparent 75%, #dfdfdf 75%, #dfdfdf), 
+    linear-gradient(45deg, #dfdfdf 25%, transparent 25%, transparent 75%, #dfdfdf 75%, #dfdfdf);
+  background-size: 4px 4px;
+  background-position: 0 0, 2px 2px;
+}
+
+/* 3. The Thumb (The part you drag) */
+::-webkit-scrollbar-thumb {
+  background-color: #c0c0c0; /* Win98 Silver */
+  /* The 3D Bevel Effect */
+  box-shadow: 
+    inset 1px 1px 0 #ffffff,  /* Top/Left Highlight */
+    inset -1px -1px 0 #000000,/* Bottom/Right Black */
+    inset -2px -2px 0 #808080;/* Bottom/Right Shadow */
+}
+
+/* 4. The Buttons (Arrows) General Style */
+::-webkit-scrollbar-button {
+  display: block;
+  height: 16px;
+  width: 16px;
+  background-color: #c0c0c0;
+  /* The 3D Button Bevel */
+  box-shadow: 
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #000000,
+    inset -2px -2px 0 #808080;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 5. Preventing "4 Buttons" (hiding the inner doubles) */
+/* We only want buttons at the very start and very end */
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement, 
+::-webkit-scrollbar-button:horizontal:start:increment, 
+::-webkit-scrollbar-button:horizontal:end:decrement {
+  display: none;
+}
+
+/* 6. The Arrow Icons (SVG Data URIs for crisp pixel-perfect arrows) */
+
+/* UP Arrow */
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 0L0 7h8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* DOWN Arrow */
+::-webkit-scrollbar-button:vertical:end:increment {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8L0 1h8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* LEFT Arrow */
+::-webkit-scrollbar-button:horizontal:start:decrement {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4l7 4V0z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+/* RIGHT Arrow */
+::-webkit-scrollbar-button:horizontal:end:increment {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 4L1 0v8z' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+}
+
+    /* Windows 98 Style Range Sliders (Seek Bar & Volume) */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      height: 20px;
+      outline: none;
+    }
+    
+    /* Track (the groove) */
+    input[type="range"]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      background: #C0C0C0;
+      border: 1px solid #808080;
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    input[type="range"]::-moz-range-track {
+      width: 100%;
+      height: 6px;
+      background: #C0C0C0;
+      border: 1px solid #808080;
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    /* Thumb (the draggable part) */
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 18px;
+      background: linear-gradient(to right, 
+        #DFDFDF 0%, 
+        #C0C0C0 50%, 
+        #808080 100%);
+      border: 1px solid #808080;
+      box-shadow: 
+        inset 1px 1px 0 #FFFFFF,
+        inset -1px -1px 0 #000000,
+        1px 1px 2px rgba(0,0,0,0.3);
+      cursor: url("https://files.catbox.moe/rllfo2.cur"), pointer;
+      margin-top: -7px;
+    }
+    
+    input[type="range"]::-moz-range-thumb {
+      width: 12px;
+      height: 18px;
+      background: linear-gradient(to right, 
+        #DFDFDF 0%, 
+        #C0C0C0 50%, 
+        #808080 100%);
+      border: 1px solid #808080;
+      box-shadow: 
+        inset 1px 1px 0 #FFFFFF,
+        inset -1px -1px 0 #000000,
+        1px 1px 2px rgba(0,0,0,0.3);
+        cursor: url("https://files.catbox.moe/rllfo2.cur"), pointer;
+      border-radius: 0;
+    }
+    
+    /* Active state */
+    input[type="range"]::-webkit-slider-thumb:active {
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+    
+    input[type="range"]::-moz-range-thumb:active {
+      box-shadow: 
+        inset -1px -1px 0 #FFFFFF,
+        inset 1px 1px 0 #000000;
+    }
+
+    /* MSN Messenger Chattable */
+    #chattable {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    div, input, select, button, iframe {
+        cursor: url("https://files.catbox.moe/2tpljw.cur"), default;
+    }
+    @keyframes blink {
+    50% { opacity: 0; }
+  }
