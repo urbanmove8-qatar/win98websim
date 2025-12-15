@@ -8,6 +8,21 @@
   <link href="https://fonts.cdnfonts.com/css/fixedsys-62" rel="stylesheet">
   <link rel="stylesheet" href="windows.css" />
 </head>
+<body>
+
+  <!-- Blue Screen of Death -->
+  <div class="bsod" id="bsod" style=" font-family: 'Fixedsys 62', 'Courier New', monospace;">
+    <pre><span style="background-color: #AAAAAA; color: #0000AA; padding: 0 4px;">Windows</span>
+
+Egy végzetes 0E kivétel történt a 0028:C0034B23 címen. Az aktuális
+alkalmazás leáll.
+
+*  Nyomjon meg egy billentyűt az aktuális alkalmazás leállításához.
+*  Nyomja meg ismét a CTRL+ALT+DEL billentyűket a számítógép újraindításához.
+   Ezzel elveszíti az összes alkalmazásban lévő, nem mentett adatot.
+
+Nyomjon meg egy billentyűt a folytatáshoz<span id="bsod-cursor" style="visibility: visible; animation: blink 1s step-start infinite;">_</span></pre>
+  </div>
 
   <div id="desktop">
     <!-- Asztali ikonok itt lesznek -->
@@ -121,6 +136,8 @@
 
   <!-- Hangok -->
   <audio id="audio-click" src="https://files.catbox.moe/4jq285.mp3" preload="auto"></audio>
+  <!-- <audio id="audio-open" src="https://www.win98.fun/audio/win98/start.mp3" preload="auto"></audio>
+  <audio id="audio-close" src="https://www.win98.fun/audio/win98/close.mp3" preload="auto"></audio> -->
   <audio id="audio-error" src="https://files.catbox.moe/0odkzx.mp3" preload="auto"></audio>
   <audio id="audio-ding" src="https://files.catbox.moe/p920rw.mp3" preload="auto"></audio>
 
